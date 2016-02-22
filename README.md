@@ -26,7 +26,7 @@ pod 'YSRangeSlider'
 - iOS 8.0 or above
 
 ## Author
-- [Laurentiu Ungur](laurentiu.ungur@yardi.com)
+- [Laurentiu Ungur](https://github.com/LaurentiuUngur)
 
 ## License
 - YSRangeSlider is available under the [MIT license](LICENSE).
