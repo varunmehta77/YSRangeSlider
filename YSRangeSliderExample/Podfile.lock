@@ -6,9 +6,11 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   YSRangeSlider:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   YSRangeSlider: 304b6cfc71a5939fefb21b3fed1dbf642a7d7558
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: e5cd5f0c9c25be1ded11d3812820cd4ef93c2ad9
+
+COCOAPODS: 1.0.0.beta.6
