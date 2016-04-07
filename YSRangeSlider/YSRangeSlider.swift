@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable public final class YSRangeSlider: UIControl {
+@IBDesignable public class YSRangeSlider: UIControl {
     // MARK: - Public Properties
     
     /// The minimum possible value to select in the range
@@ -79,7 +79,8 @@ import UIKit
             thumbsDistanceLineLayer.frame.size.height = sliderLineHeight
         }
     }
-    public weak var delegate: YSRangeSLiderDelegate?
+    /// The delegate of `YSRangeSlider`
+    public weak var delegate: YSRangeSliderDelegate?
     
     // MARK: - Private Properties
     
@@ -242,7 +243,7 @@ import UIKit
 
 // MARK: - YSRangeSliderDelegate
 
-public protocol YSRangeSLiderDelegate: class {
+public protocol YSRangeSliderDelegate: class {
     /**
         Delegate method that is called every time minimum or maximum selected value is changed
         - Parameters:
