@@ -10,7 +10,9 @@ before_install:
     - env
     - locale
     - rvm list
-    - rvm use 2.1
+    - gem list
+    - gem list activesupport
+    - gem list cocoapods
     - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
     - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
     - pod --version
