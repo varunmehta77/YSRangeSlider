@@ -50,7 +50,7 @@ import UIKit
     }
     /** The step, or increment, value for the slider
      
-    - Note: Default value is `0`
+    - Note: Default value is `0.0`, which means it is disabled
     - Precondition: Must be numerically greater than `0` and less than or equal to `maximumValue`
     */
     @IBInspectable public var step: CGFloat = 0.0 {
