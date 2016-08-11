@@ -17,13 +17,21 @@ import UIKit
     }
     /// The maximum possible value to select in the range
     @IBInspectable public var maximumValue: CGFloat = 1.0 {
-        didSet { updateComponentsPosition() }
+        didSet {
+            if step > maximumValue {
+                preconditionFailure("Step value must be less than or equal to maximum value")
+            }
+            updateComponentsPosition()
+        }
     }
     /// The preselected minimum value from range [minimumValue, maximumValue]
     @IBInspectable public var minimumSelectedValue: CGFloat = 0.0 {
         didSet{
             if minimumSelectedValue < minimumValue || minimumSelectedValue > maximumValue {
                 minimumSelectedValue = minimumValue
+            }
+            if step > 0 {
+                minimumSelectedValue = CGFloat(roundf(Float(minimumSelectedValue / step))) * step
             }
             updateComponentsPosition()
         }
@@ -34,7 +42,24 @@ import UIKit
             if maximumSelectedValue < minimumValue || maximumSelectedValue > maximumValue {
                 maximumSelectedValue = maximumValue
             }
+            if step > 0 {
+                maximumSelectedValue = CGFloat(roundf(Float(maximumSelectedValue / step))) * step
+            }
             updateComponentsPosition()
+        }
+    }
+    /** The step, or increment, value for the slider
+     
+    - Note: Default value is `0.0`, which means it is disabled
+    - Precondition: Must be numerically greater than `0` and less than or equal to `maximumValue`
+    */
+    @IBInspectable public var step: CGFloat = 0.0 {
+        didSet {
+            if step < 0 {
+                preconditionFailure("Step value must be positive")
+            } else if step > maximumValue {
+                preconditionFailure("Step value must be less than or equal to maximum value")
+            }
         }
     }
     /// The color of the slider
@@ -189,7 +214,7 @@ import UIKit
         }
     }
     
-    // MARK: - Private Methods
+    // MARK: - Private Functions
     
     private func updateComponentsPosition() {
         CATransaction.begin()
@@ -244,12 +269,12 @@ import UIKit
 // MARK: - YSRangeSliderDelegate
 
 public protocol YSRangeSliderDelegate: class {
-    /**
-        Delegate method that is called every time minimum or maximum selected value is changed
-        - Parameters:
-            - rangeSlider: Current instance of `YSRangeSlider`
-            - minimumSelectedValue: The minimum selected value
-            - maximumSelectedValue: The maximum selected value
-     */
+    /** Delegate function that is called every time minimum or maximum selected value is changed
+     
+    - Parameters:
+        - rangeSlider: Current instance of `YSRangeSlider`
+        - minimumSelectedValue: The minimum selected value
+        - maximumSelectedValue: The maximum selected value
+    */
     func rangeSliderDidChange(rangeSlider: YSRangeSlider, minimumSelectedValue: CGFloat, maximumSelectedValue: CGFloat)
 }

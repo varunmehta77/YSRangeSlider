@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -74,24 +74,39 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Steps enabled" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SqW-si-wwu">
+                                <rect key="frame" x="248" y="360" width="104" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="GRd-GE-w9n">
+                                <rect key="frame" x="373" y="355" width="51" height="31"/>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XuE-C7-uyE" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="7mu-mG-oaX"/>
+                            <constraint firstItem="SqW-si-wwu" firstAttribute="top" secondItem="XuE-C7-uyE" secondAttribute="bottom" constant="20" id="DHW-Jd-Pkz"/>
                             <constraint firstItem="H9S-h0-hYT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="24" id="DlO-n6-aQM"/>
                             <constraint firstItem="XuE-C7-uyE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="P6H-nE-j78"/>
                             <constraint firstItem="XuE-C7-uyE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VfN-x7-bHO"/>
+                            <constraint firstItem="GRd-GE-w9n" firstAttribute="leading" secondItem="SqW-si-wwu" secondAttribute="trailing" constant="21" id="aWw-bJ-Rta"/>
+                            <constraint firstItem="GRd-GE-w9n" firstAttribute="top" secondItem="SqW-si-wwu" secondAttribute="top" constant="-5" id="cYM-Ww-A0V"/>
                             <constraint firstAttribute="trailing" secondItem="XuE-C7-uyE" secondAttribute="trailing" id="hVo-Uf-4nL"/>
                             <constraint firstItem="H9S-h0-hYT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iZg-W7-dr7"/>
+                            <constraint firstItem="SqW-si-wwu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lti-S4-nGH"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="label" destination="H9S-h0-hYT" id="Sfe-vU-FEG"/>
                         <outlet property="rangeSlider" destination="XuE-C7-uyE" id="VVG-2k-0lJ"/>
+                        <outlet property="stepsSwitch" destination="GRd-GE-w9n" id="Kga-jw-yc3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="435" y="385"/>
         </scene>
     </scenes>
 </document>
