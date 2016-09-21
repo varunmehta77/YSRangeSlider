@@ -8,15 +8,15 @@
 
 import UIKit
 
-@IBDesignable public class YSRangeSlider: UIControl {
+@IBDesignable open class YSRangeSlider: UIControl {
     // MARK: - Public Properties
     
     /// The minimum possible value to select in the range
-    @IBInspectable public var minimumValue: CGFloat = 0.0 {
+    @IBInspectable open var minimumValue: CGFloat = 0.0 {
         didSet { updateComponentsPosition() }
     }
     /// The maximum possible value to select in the range
-    @IBInspectable public var maximumValue: CGFloat = 1.0 {
+    @IBInspectable open var maximumValue: CGFloat = 1.0 {
         didSet {
             if step > maximumValue {
                 preconditionFailure("Step value must be less than or equal to maximum value")
@@ -25,7 +25,7 @@ import UIKit
         }
     }
     /// The preselected minimum value from range [minimumValue, maximumValue]
-    @IBInspectable public var minimumSelectedValue: CGFloat = 0.0 {
+    @IBInspectable open var minimumSelectedValue: CGFloat = 0.0 {
         didSet{
             if minimumSelectedValue < minimumValue || minimumSelectedValue > maximumValue {
                 minimumSelectedValue = minimumValue
@@ -37,7 +37,7 @@ import UIKit
         }
     }
     /// The preselected maximum value from range [minimumValue, maximumValue]
-    @IBInspectable public var maximumSelectedValue: CGFloat = 1.0 {
+    @IBInspectable open var maximumSelectedValue: CGFloat = 1.0 {
         didSet{
             if maximumSelectedValue < minimumValue || maximumSelectedValue > maximumValue {
                 maximumSelectedValue = maximumValue
@@ -53,7 +53,7 @@ import UIKit
     - Note: Default value is `0.0`, which means it is disabled
     - Precondition: Must be numerically greater than `0` and less than or equal to `maximumValue`
     */
-    @IBInspectable public var step: CGFloat = 0.0 {
+    @IBInspectable open var step: CGFloat = 0.0 {
         didSet {
             if step < 0 {
                 preconditionFailure("Step value must be positive")
@@ -63,49 +63,49 @@ import UIKit
         }
     }
     /// The color of the slider
-    @IBInspectable public var sliderLineColor: UIColor = UIColor.blackColor() {
-        didSet { sliderLineLayer.backgroundColor = sliderLineColor.CGColor }
+    @IBInspectable open var sliderLineColor: UIColor = UIColor.black {
+        didSet { sliderLineLayer.backgroundColor = sliderLineColor.cgColor }
     }
     /// The color of slider between left and right thumb
-    @IBInspectable public var sliderLineColorBetweenThumbs: UIColor = UIColor.yellowColor() {
-        didSet { thumbsDistanceLineLayer.backgroundColor = sliderLineColorBetweenThumbs.CGColor }
+    @IBInspectable open var sliderLineColorBetweenThumbs: UIColor = UIColor.yellow {
+        didSet { thumbsDistanceLineLayer.backgroundColor = sliderLineColorBetweenThumbs.cgColor }
     }
     /// Padding between slider and controller sides
-    @IBInspectable public var sliderSidePadding: CGFloat = 15.0 {
+    @IBInspectable open var sliderSidePadding: CGFloat = 15.0 {
         didSet { layoutSubviews() }
     }
     /// The color of the left thumb
-    @IBInspectable public var leftThumbColor: UIColor = UIColor.blackColor() {
-        didSet { leftThumbLayer.backgroundColor = leftThumbColor.CGColor }
+    @IBInspectable open var leftThumbColor: UIColor = UIColor.black {
+        didSet { leftThumbLayer.backgroundColor = leftThumbColor.cgColor }
     }
     /// The color of the right thumb
-    @IBInspectable public var rightThumbColor: UIColor = UIColor.blackColor() {
-        didSet { rightThumbLayer.backgroundColor = rightThumbColor.CGColor }
+    @IBInspectable open var rightThumbColor: UIColor = UIColor.black {
+        didSet { rightThumbLayer.backgroundColor = rightThumbColor.cgColor }
     }
     /// The corner radius of the left thumb
-    @IBInspectable public var leftThumbCornerRadius: CGFloat = 10.0 {
+    @IBInspectable open var leftThumbCornerRadius: CGFloat = 10.0 {
         didSet { leftThumbLayer.cornerRadius = leftThumbCornerRadius }
     }
     /// The corner radius of the right thumb
-    @IBInspectable public var rightThumbCornerRadius: CGFloat = 10.0 {
+    @IBInspectable open var rightThumbCornerRadius: CGFloat = 10.0 {
         didSet { rightThumbLayer.cornerRadius = rightThumbCornerRadius }
     }
     /// The size of the thumbs
-    @IBInspectable public var thumbsSize: CGFloat = 20.0 {
+    @IBInspectable open var thumbsSize: CGFloat = 20.0 {
         didSet {
             leftThumbLayer.frame.size = CGSize(width: thumbsSize, height: thumbsSize)
             rightThumbLayer.frame.size = CGSize(width: thumbsSize, height: thumbsSize)
         }
     }
     /// The height of the slider
-    @IBInspectable public var sliderLineHeight: CGFloat = 1.0 {
+    @IBInspectable open var sliderLineHeight: CGFloat = 1.0 {
         didSet {
             sliderLineLayer.frame.size.height = sliderLineHeight
             thumbsDistanceLineLayer.frame.size.height = sliderLineHeight
         }
     }
     /// The delegate of `YSRangeSlider`
-    public weak var delegate: YSRangeSliderDelegate?
+    open weak var delegate: YSRangeSliderDelegate?
     
     // MARK: - Private Properties
     
@@ -132,18 +132,18 @@ import UIKit
     }
     
     private func commonInit() {
-        sliderLineLayer.backgroundColor = sliderLineColor.CGColor
+        sliderLineLayer.backgroundColor = sliderLineColor.cgColor
         layer.addSublayer(sliderLineLayer)
         
-        thumbsDistanceLineLayer.backgroundColor = sliderLineColorBetweenThumbs.CGColor
+        thumbsDistanceLineLayer.backgroundColor = sliderLineColorBetweenThumbs.cgColor
         layer.addSublayer(thumbsDistanceLineLayer)
         
-        leftThumbLayer.backgroundColor = leftThumbColor.CGColor
+        leftThumbLayer.backgroundColor = leftThumbColor.cgColor
         leftThumbLayer.cornerRadius = leftThumbCornerRadius
         leftThumbLayer.frame = CGRect(x: 0, y: 0, width: thumbsSize, height: thumbsSize)
         layer.addSublayer(leftThumbLayer)
         
-        rightThumbLayer.backgroundColor = rightThumbColor.CGColor
+        rightThumbLayer.backgroundColor = rightThumbColor.cgColor
         rightThumbLayer.cornerRadius = rightThumbCornerRadius
         rightThumbLayer.frame = CGRect(x: 0, y: 0, width: thumbsSize, height: thumbsSize)
         layer.addSublayer(rightThumbLayer)
@@ -151,12 +151,12 @@ import UIKit
         updateComponentsPosition()
     }
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         
-        let frameMiddleY = CGRectGetHeight(frame) / 2.0
+        let frameMiddleY = frame.height / 2.0
         let lineLeftSide = CGPoint(x: sliderSidePadding, y: frameMiddleY)
-        let lineRightSide = CGPoint(x: CGRectGetWidth(frame) - sliderSidePadding, y: frameMiddleY)
+        let lineRightSide = CGPoint(x: frame.width - sliderSidePadding, y: frameMiddleY)
         
         sliderLineLayer.frame = CGRect(x: lineLeftSide.x, y: lineLeftSide.y, width: lineRightSide.x - lineLeftSide.x, height: sliderLineHeight)
         
@@ -165,23 +165,23 @@ import UIKit
     
     // MARK: - Touch Tracking
     
-    override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
-        let pressGestureLocation = touch.locationInView(self)
-        
-        if CGRectContainsPoint(CGRectInset(leftThumbLayer.frame, thumbTouchAreaExpansion, thumbTouchAreaExpansion), pressGestureLocation) ||
-           CGRectContainsPoint(CGRectInset(rightThumbLayer.frame, thumbTouchAreaExpansion, thumbTouchAreaExpansion), pressGestureLocation) {
-            let distanceFromLeftThumb = distanceBetweenPoints(pressGestureLocation, centerOfRect(leftThumbLayer.frame))
-            let distanceFromRightThumb = distanceBetweenPoints(pressGestureLocation, centerOfRect(rightThumbLayer.frame))
+    override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let pressGestureLocation = touch.location(in: self)
+
+        if leftThumbLayer.frame.insetBy(dx: thumbTouchAreaExpansion, dy: thumbTouchAreaExpansion).contains(pressGestureLocation) ||
+           rightThumbLayer.frame.insetBy(dx: thumbTouchAreaExpansion, dy: thumbTouchAreaExpansion).contains(pressGestureLocation) {
+            let distanceFromLeftThumb = distanceBetween(firstPoint: pressGestureLocation, secondPoint: leftThumbLayer.frame.center)
+            let distanceFromRightThumb = distanceBetween(firstPoint: pressGestureLocation, secondPoint: rightThumbLayer.frame.center)
             
             if distanceFromLeftThumb < distanceFromRightThumb {
                 leftThumbSelected = true
-                animateThumbLayer(leftThumbLayer, isSelected: true)
-            } else if maximumSelectedValue == maximumValue && centerOfRect(leftThumbLayer.frame).x == centerOfRect(rightThumbLayer.frame).x {
+                animate(thumbLayer: leftThumbLayer, isSelected: true)
+            } else if maximumSelectedValue == maximumValue && leftThumbLayer.frame.center.x == rightThumbLayer.frame.center.x {
                 leftThumbSelected = true
-                animateThumbLayer(leftThumbLayer, isSelected: true)
+                animate(thumbLayer: leftThumbLayer, isSelected: true)
             } else {
                 rightThumbSelected = true
-                animateThumbLayer(rightThumbLayer, isSelected: true)
+                animate(thumbLayer: rightThumbLayer, isSelected: true)
             }
             
             return true
@@ -190,9 +190,9 @@ import UIKit
         return false
     }
     
-    override public func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
-        let location = touch.locationInView(self)
-        let percentage = (location.x - CGRectGetMinX(sliderLineLayer.frame) - thumbsSize / 2) / (CGRectGetMaxX(sliderLineLayer.frame) - CGRectGetMinX(sliderLineLayer.frame))
+    override open func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let location = touch.location(in: self)
+        let percentage = (location.x - sliderLineLayer.frame.minX - thumbsSize / 2) / (sliderLineLayer.frame.maxX - sliderLineLayer.frame.minX)
         let selectedValue = percentage * (maximumValue - minimumValue) + minimumValue
         
         if leftThumbSelected {
@@ -204,13 +204,13 @@ import UIKit
         return true
     }
     
-    override public func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
+    override open func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         if leftThumbSelected {
             leftThumbSelected = false
-            animateThumbLayer(leftThumbLayer, isSelected: false)
+            animate(thumbLayer: leftThumbLayer, isSelected: false)
         } else {
             rightThumbSelected = false
-            animateThumbLayer(rightThumbLayer, isSelected: false)
+            animate(thumbLayer: rightThumbLayer, isSelected: false)
         }
     }
     
@@ -226,43 +226,47 @@ import UIKit
     }
     
     private func updateThumbsPosition() {
-        let leftThumbCenter = CGPoint(x: getXPositionAlongSliderForValue(minimumSelectedValue), y: CGRectGetMidY(sliderLineLayer.frame))
-        let rightThumbCenter = CGPoint(x: getXPositionAlongSliderForValue(maximumSelectedValue), y: CGRectGetMidY(sliderLineLayer.frame))
+        let leftThumbCenter = CGPoint(x: getXPositionAlongSliderFor(value: minimumSelectedValue), y: sliderLineLayer.frame.midY)
+        let rightThumbCenter = CGPoint(x: getXPositionAlongSliderFor(value: maximumSelectedValue), y: sliderLineLayer.frame.midY)
         
         leftThumbLayer.position = leftThumbCenter
         rightThumbLayer.position = rightThumbCenter
         thumbsDistanceLineLayer.frame = CGRect(x: leftThumbLayer.position.x, y: sliderLineLayer.frame.origin.y, width: rightThumbLayer.position.x - leftThumbLayer.position.x, height: sliderLineHeight)
     }
     
-    private func getPercentageAlongSliderForValue(value: CGFloat) -> CGFloat {
+    private func getPercentageAlongSliderFor(value: CGFloat) -> CGFloat {
         return (minimumValue != maximumValue) ? (value - minimumValue) / (maximumValue - minimumValue) : 0
     }
     
-    private func getXPositionAlongSliderForValue(value: CGFloat) -> CGFloat {
-        let percentage = getPercentageAlongSliderForValue(value)
-        let differenceBetweenMaxMinCoordinatePositionX = CGRectGetMaxX(sliderLineLayer.frame) - CGRectGetMinX(sliderLineLayer.frame)
+    private func getXPositionAlongSliderFor(value: CGFloat) -> CGFloat {
+        let percentage = getPercentageAlongSliderFor(value: value)
+        let differenceBetweenMaxMinCoordinatePositionX = sliderLineLayer.frame.maxX - sliderLineLayer.frame.minX
         let offset = percentage * differenceBetweenMaxMinCoordinatePositionX
     
-        return CGRectGetMinX(sliderLineLayer.frame) + offset
+        return sliderLineLayer.frame.minX + offset
     }
     
-    private func distanceBetweenPoints(firstPoint: CGPoint, _ secondPoint: CGPoint) -> CGFloat {
+    private func distanceBetween(firstPoint: CGPoint, secondPoint: CGPoint) -> CGFloat {
         let xDistance = secondPoint.x - firstPoint.x
         let yDistance = secondPoint.y - firstPoint.y
         
         return sqrt(pow(xDistance, 2) + pow(yDistance, 2))
     }
     
-    private func centerOfRect(rect: CGRect) -> CGPoint {
-        return CGPoint(x: CGRectGetMidX(rect), y: CGRectGetMidY(rect))
-    }
-    
-    private func animateThumbLayer(thumbLayer: CALayer, isSelected selected: Bool) {
+    private func animate(thumbLayer: CALayer, isSelected selected: Bool) {
         CATransaction.begin()
         CATransaction.setAnimationDuration(0.5)
         CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
         thumbLayer.transform = selected ? CATransform3DMakeScale(1.3, 1.3, 1) : CATransform3DIdentity
         CATransaction.commit()
+    }
+}
+
+// MARK: - CGRect Extension
+
+extension CGRect {
+    var center: CGPoint {
+        return CGPoint(x: midX, y: midY)
     }
 }
 
@@ -276,5 +280,5 @@ public protocol YSRangeSliderDelegate: class {
         - minimumSelectedValue: The minimum selected value
         - maximumSelectedValue: The maximum selected value
     */
-    func rangeSliderDidChange(rangeSlider: YSRangeSlider, minimumSelectedValue: CGFloat, maximumSelectedValue: CGFloat)
+    func rangeSliderDidChange(_ rangeSlider: YSRangeSlider, minimumSelectedValue: CGFloat, maximumSelectedValue: CGFloat)
 }

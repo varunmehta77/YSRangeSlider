@@ -18,18 +18,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         rangeSlider.delegate = self
-        stepsSwitch.addTarget(self, action: #selector(switchChanged), forControlEvents: .ValueChanged)
+        stepsSwitch.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
     }
     
-    func switchChanged(sender: UISwitch) {
-        rangeSlider.step = sender.on ? 0.1 : 0.0
+    func switchChanged(_ sender: UISwitch) {
+        rangeSlider.step = sender.isOn ? 0.1 : 0.0
     }
 }
 
 // MARK: - YSRangeSliderDelegate
 
 extension ViewController: YSRangeSliderDelegate {
-    func rangeSliderDidChange(rangeSlider: YSRangeSlider, minimumSelectedValue: CGFloat, maximumSelectedValue: CGFloat) {
+    func rangeSliderDidChange(_ rangeSlider: YSRangeSlider, minimumSelectedValue: CGFloat, maximumSelectedValue: CGFloat) {
         label.text = "From \(minimumSelectedValue) to \(maximumSelectedValue)"
     }
 }
