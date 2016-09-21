@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'YSRangeSlider'
-  s.version  = '2.1.0'
+  s.version  = '3.0.0'
   s.license  = { :type => 'MIT', :file => 'LICENSE' }
   s.summary  = 'Configurable range slider for iOS (IBInspectable and IBDesignable)'
   s.homepage = 'https://github.com/YardiSystems/YSRangeSlider'
