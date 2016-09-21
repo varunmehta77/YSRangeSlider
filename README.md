@@ -11,6 +11,9 @@ Configurable range slider for iOS (IBInspectable and IBDesignable)
     <img src="YSRangeSlider.jpeg" title="YSRangeSlider demo image" float=center width=400>
 </p>
 
+#### ⚠️ **To use with Swift 2.x please ensure you are using == 2.1.0**
+#### ⚠️ **To use with Swift 3.x please ensure you are using >= 3.0.0** 
+
 ## How to get started
 
 ### install via CocoaPods
@@ -22,8 +25,9 @@ pod 'YSRangeSlider'
 
 ## Requirements
 
-- Xcode 7 and above
-- iOS 8.0 or above
+- Xcode 8.0+
+- Swift 3.0+
+- iOS 8.0+
 
 ## Author
 - [Laurentiu Ungur](https://github.com/LaurentiuUngur)
