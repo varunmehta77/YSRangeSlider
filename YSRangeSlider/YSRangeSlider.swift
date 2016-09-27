@@ -95,6 +95,22 @@ import UIKit
     @IBInspectable open var leftThumbCornerRadius: CGFloat = 10.0 {
         didSet { leftThumbLayer.cornerRadius = leftThumbCornerRadius }
     }
+    /// The shadow color of the left thumb
+    @IBInspectable public var leftThumbShadowColor: UIColor = UIColor.clear {
+        didSet { leftThumbLayer.shadowColor = leftThumbShadowColor.cgColor }
+    }
+    /// The shadow opacity of the left thumb
+    @IBInspectable public var leftThumbShadowOpacity: Float = 0.0 {
+        didSet { leftThumbLayer.shadowOpacity = leftThumbShadowOpacity }
+    }
+    /// The shadow radius of the left thumb
+    @IBInspectable public var leftThumbShadowRadius: CGFloat = 0.0 {
+        didSet { leftThumbLayer.shadowRadius = leftThumbShadowRadius }
+    }
+    /// The shadow offset of the left thumb
+    @IBInspectable public var leftThumbShadowOffset: CGSize = CGSize(width: 0.0, height: 2.0) {
+        didSet { leftThumbLayer.shadowOffset = leftThumbShadowOffset }
+    }
     /// The color of the right thumb
     @IBInspectable open var rightThumbColor: UIColor = UIColor.black {
         didSet { rightThumbLayer.backgroundColor = rightThumbColor.cgColor }
@@ -102,6 +118,22 @@ import UIKit
     /// The corner radius of the right thumb
     @IBInspectable open var rightThumbCornerRadius: CGFloat = 10.0 {
         didSet { rightThumbLayer.cornerRadius = rightThumbCornerRadius }
+    }
+    /// The shadow color of the right thumb
+    @IBInspectable public var rightThumbShadowColor: UIColor = UIColor.clear {
+        didSet { rightThumbLayer.shadowColor = rightThumbShadowColor.cgColor }
+    }
+    /// The shadow opacity of the right thumb
+    @IBInspectable public var rightThumbShadowOpacity: Float = 0.0 {
+        didSet { rightThumbLayer.shadowOpacity = rightThumbShadowOpacity }
+    }
+    /// The shadow radius of the right thumb
+    @IBInspectable public var rightThumbShadowRadius: CGFloat = 0.0 {
+        didSet { rightThumbLayer.shadowRadius = rightThumbShadowRadius }
+    }
+    /// The shadow offset of the right thumb
+    @IBInspectable public var rightThumbShadowOffset: CGSize = CGSize(width:0.0, height:2.0) {
+        didSet { rightThumbLayer.shadowOffset = rightThumbShadowOffset }
     }
     /// The size of the thumbs
     @IBInspectable open var thumbsSize: CGFloat = 20.0 {
@@ -149,11 +181,19 @@ import UIKit
         leftThumbLayer.backgroundColor = leftThumbColor.cgColor
         leftThumbLayer.cornerRadius = leftThumbCornerRadius
         leftThumbLayer.frame = CGRect(x: 0, y: 0, width: thumbsSize, height: thumbsSize)
+        leftThumbLayer.shadowColor = leftThumbShadowColor.cgColor
+        leftThumbLayer.shadowOffset = leftThumbShadowOffset
+        leftThumbLayer.shadowOpacity = leftThumbShadowOpacity
+        leftThumbLayer.shadowRadius = leftThumbShadowRadius
         layer.addSublayer(leftThumbLayer)
         
         rightThumbLayer.backgroundColor = rightThumbColor.cgColor
         rightThumbLayer.cornerRadius = rightThumbCornerRadius
         rightThumbLayer.frame = CGRect(x: 0, y: 0, width: thumbsSize, height: thumbsSize)
+        rightThumbLayer.shadowColor = rightThumbShadowColor.cgColor
+        rightThumbLayer.shadowOffset = rightThumbShadowOffset
+        rightThumbLayer.shadowOpacity = rightThumbShadowOpacity
+        rightThumbLayer.shadowRadius = rightThumbShadowRadius
         layer.addSublayer(rightThumbLayer)
         
         updateComponentsPosition()
