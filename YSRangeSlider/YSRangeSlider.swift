@@ -70,6 +70,19 @@ import UIKit
     @IBInspectable open var sliderLineColorBetweenThumbs: UIColor = UIColor.yellow {
         didSet { thumbsDistanceLineLayer.backgroundColor = sliderLineColorBetweenThumbs.cgColor }
     }
+    /// The height of the slider
+    @IBInspectable open var sliderLineHeight: CGFloat = 1.0 {
+        didSet {
+            sliderLineLayer.frame.size.height = sliderLineHeight
+            thumbsDistanceLineLayer.frame.size.height = sliderLineHeight
+        }
+    }
+    /// The corner radius of the slider
+    @IBInspectable public var sliderLineCornerRadius: CGFloat = 0.0 {
+        didSet {
+            sliderLineLayer.cornerRadius = sliderLineCornerRadius
+        }
+    }
     /// Padding between slider and controller sides
     @IBInspectable open var sliderSidePadding: CGFloat = 15.0 {
         didSet { layoutSubviews() }
@@ -78,13 +91,13 @@ import UIKit
     @IBInspectable open var leftThumbColor: UIColor = UIColor.black {
         didSet { leftThumbLayer.backgroundColor = leftThumbColor.cgColor }
     }
-    /// The color of the right thumb
-    @IBInspectable open var rightThumbColor: UIColor = UIColor.black {
-        didSet { rightThumbLayer.backgroundColor = rightThumbColor.cgColor }
-    }
     /// The corner radius of the left thumb
     @IBInspectable open var leftThumbCornerRadius: CGFloat = 10.0 {
         didSet { leftThumbLayer.cornerRadius = leftThumbCornerRadius }
+    }
+    /// The color of the right thumb
+    @IBInspectable open var rightThumbColor: UIColor = UIColor.black {
+        didSet { rightThumbLayer.backgroundColor = rightThumbColor.cgColor }
     }
     /// The corner radius of the right thumb
     @IBInspectable open var rightThumbCornerRadius: CGFloat = 10.0 {
@@ -97,13 +110,7 @@ import UIKit
             rightThumbLayer.frame.size = CGSize(width: thumbsSize, height: thumbsSize)
         }
     }
-    /// The height of the slider
-    @IBInspectable open var sliderLineHeight: CGFloat = 1.0 {
-        didSet {
-            sliderLineLayer.frame.size.height = sliderLineHeight
-            thumbsDistanceLineLayer.frame.size.height = sliderLineHeight
-        }
-    }
+    
     /// The delegate of `YSRangeSlider`
     open weak var delegate: YSRangeSliderDelegate?
     
@@ -133,6 +140,7 @@ import UIKit
     
     private func commonInit() {
         sliderLineLayer.backgroundColor = sliderLineColor.cgColor
+        sliderLineLayer.cornerRadius = sliderLineCornerRadius
         layer.addSublayer(sliderLineLayer)
         
         thumbsDistanceLineLayer.backgroundColor = sliderLineColorBetweenThumbs.cgColor
