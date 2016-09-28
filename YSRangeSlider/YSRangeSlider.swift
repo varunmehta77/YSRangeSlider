@@ -11,11 +11,11 @@ import UIKit
 @IBDesignable open class YSRangeSlider: UIControl {
     // MARK: - Public Properties
     
-    /// The minimum possible value to select in the range
+    /// The minimum possible value to select in the range. The default value of this property is `0.0`
     @IBInspectable open var minimumValue: CGFloat = 0.0 {
         didSet { updateComponentsPosition() }
     }
-    /// The maximum possible value to select in the range
+    /// The maximum possible value to select in the range. The default value of this property is `1.0`
     @IBInspectable open var maximumValue: CGFloat = 1.0 {
         didSet {
             if step > maximumValue {
@@ -24,7 +24,7 @@ import UIKit
             updateComponentsPosition()
         }
     }
-    /// The preselected minimum value from range [minimumValue, maximumValue]
+    /// The preselected minimum value from range [minimumValue, maximumValue]. The default value of this property is `0.0`
     @IBInspectable open var minimumSelectedValue: CGFloat = 0.0 {
         didSet{
             if minimumSelectedValue < minimumValue || minimumSelectedValue > maximumValue {
@@ -36,7 +36,7 @@ import UIKit
             updateComponentsPosition()
         }
     }
-    /// The preselected maximum value from range [minimumValue, maximumValue]
+    /// The preselected maximum value from range [minimumValue, maximumValue]. The default value of this property is `1.0`
     @IBInspectable open var maximumSelectedValue: CGFloat = 1.0 {
         didSet{
             if maximumSelectedValue < minimumValue || maximumSelectedValue > maximumValue {
@@ -48,7 +48,7 @@ import UIKit
             updateComponentsPosition()
         }
     }
-    /** The step, or increment, value for the slider
+    /** The step, or increment, value for the slider. The default value of this property is `0.0`
      
     - Note: Default value is `0.0`, which means it is disabled
     - Precondition: Must be numerically greater than `0` and less than or equal to `maximumValue`
@@ -62,80 +62,94 @@ import UIKit
             }
         }
     }
-    /// The color of the slider
-    @IBInspectable open var sliderLineColor: UIColor = UIColor.black {
-        didSet { sliderLineLayer.backgroundColor = sliderLineColor.cgColor }
-    }
-    /// The color of slider between left and right thumb
+    /// The color of slider between left and right thumb. The default value of this property is `yellow`
     @IBInspectable open var sliderLineColorBetweenThumbs: UIColor = UIColor.yellow {
         didSet { thumbsDistanceLineLayer.backgroundColor = sliderLineColorBetweenThumbs.cgColor }
     }
-    /// The height of the slider
+    /// The height of the slider. The default value of this property is `1.0`
     @IBInspectable open var sliderLineHeight: CGFloat = 1.0 {
         didSet {
             sliderLineLayer.frame.size.height = sliderLineHeight
             thumbsDistanceLineLayer.frame.size.height = sliderLineHeight
         }
     }
-    /// The corner radius of the slider
-    @IBInspectable public var sliderLineCornerRadius: CGFloat = 0.0 {
-        didSet {
-            sliderLineLayer.cornerRadius = sliderLineCornerRadius
-        }
-    }
-    /// Padding between slider and controller sides
+    /// Padding between slider and controller sides. The default value of this property is `15.0`
     @IBInspectable open var sliderSidePadding: CGFloat = 15.0 {
         didSet { layoutSubviews() }
     }
-    /// The color of the left thumb
+    /// The color of the slider. The default value of this property is `black`
+    @IBInspectable open var sliderLineColor: UIColor = UIColor.black {
+        didSet { sliderLineLayer.backgroundColor = sliderLineColor.cgColor }
+    }
+    /// The corner radius of the slider. The default value of this property is `0.0`
+    @IBInspectable open var sliderLineCornerRadius: CGFloat = 0.0 {
+        didSet { sliderLineLayer.cornerRadius = sliderLineCornerRadius }
+    }
+    /// The shadow color of the slider. The default value of this property is `clear`
+    @IBInspectable open var sliderLineShadowColor: UIColor = UIColor.clear {
+        didSet { sliderLineLayer.shadowColor = sliderLineShadowColor.cgColor }
+    }
+    /// The shadow opacity of the slider. The default value of this property is `0.0`
+    @IBInspectable open var sliderLineShadowOpacity: Float = 0.0 {
+        didSet { sliderLineLayer.shadowOpacity = sliderLineShadowOpacity }
+    }
+    /// The shadow radius of the slider. The default value of this property is `3.0`
+    @IBInspectable open var sliderLineShadowRadius: CGFloat = 3.0 {
+        didSet { sliderLineLayer.shadowRadius = sliderLineShadowRadius }
+    }
+    /// The shadow offset of the slider. The default value of this property is `(0.0, -3.0)`
+    @IBInspectable open var sliderLineShadowOffset: CGSize = CGSize(width: 0.0, height: -3.0) {
+        didSet { sliderLineLayer.shadowOffset = sliderLineShadowOffset }
+    }
+    /// The color of the left thumb. The default value of this property is `black`
     @IBInspectable open var leftThumbColor: UIColor = UIColor.black {
         didSet { leftThumbLayer.backgroundColor = leftThumbColor.cgColor }
     }
-    /// The corner radius of the left thumb
+    /// The corner radius of the left thumb. The default value of this property is `10.0`
     @IBInspectable open var leftThumbCornerRadius: CGFloat = 10.0 {
         didSet { leftThumbLayer.cornerRadius = leftThumbCornerRadius }
     }
-    /// The shadow color of the left thumb
-    @IBInspectable public var leftThumbShadowColor: UIColor = UIColor.clear {
+    /// The shadow color of the left thumb. The default value of this property is `clear`
+    @IBInspectable open var leftThumbShadowColor: UIColor = UIColor.clear {
         didSet { leftThumbLayer.shadowColor = leftThumbShadowColor.cgColor }
     }
-    /// The shadow opacity of the left thumb
-    @IBInspectable public var leftThumbShadowOpacity: Float = 0.0 {
+    /// The shadow opacity of the left thumb. The default value of this property is `0.0`
+    @IBInspectable open var leftThumbShadowOpacity: Float = 0.0 {
         didSet { leftThumbLayer.shadowOpacity = leftThumbShadowOpacity }
     }
-    /// The shadow radius of the left thumb
-    @IBInspectable public var leftThumbShadowRadius: CGFloat = 0.0 {
+    /// The shadow radius of the left thumb. The default value of this property is `3.0`
+    @IBInspectable open var leftThumbShadowRadius: CGFloat = 3.0 {
         didSet { leftThumbLayer.shadowRadius = leftThumbShadowRadius }
     }
-    /// The shadow offset of the left thumb
-    @IBInspectable public var leftThumbShadowOffset: CGSize = CGSize(width: 0.0, height: 2.0) {
+    /// The shadow offset of the left thumb. The default value of this property is `(0.0, -3.0)`
+    @IBInspectable open var leftThumbShadowOffset: CGSize = CGSize(width: 0.0, height: -3.0) {
         didSet { leftThumbLayer.shadowOffset = leftThumbShadowOffset }
     }
-    /// The color of the right thumb
+    /// The color of the right thumb. The default value of this property is `black`
     @IBInspectable open var rightThumbColor: UIColor = UIColor.black {
         didSet { rightThumbLayer.backgroundColor = rightThumbColor.cgColor }
     }
-    /// The corner radius of the right thumb
+    /// The corner radius of the right thumb. The default value of this property is `10.0`
     @IBInspectable open var rightThumbCornerRadius: CGFloat = 10.0 {
         didSet { rightThumbLayer.cornerRadius = rightThumbCornerRadius }
     }
-    /// The shadow color of the right thumb
-    @IBInspectable public var rightThumbShadowColor: UIColor = UIColor.clear {
+    /// The shadow color of the right thumb. The default value of this property is `clear`
+    @IBInspectable open var rightThumbShadowColor: UIColor = UIColor.clear {
         didSet { rightThumbLayer.shadowColor = rightThumbShadowColor.cgColor }
     }
-    /// The shadow opacity of the right thumb
-    @IBInspectable public var rightThumbShadowOpacity: Float = 0.0 {
+    /// The shadow opacity of the right thumb. The default value of this property is `0.0`
+    @IBInspectable open var rightThumbShadowOpacity: Float = 0.0 {
         didSet { rightThumbLayer.shadowOpacity = rightThumbShadowOpacity }
     }
-    /// The shadow radius of the right thumb
-    @IBInspectable public var rightThumbShadowRadius: CGFloat = 0.0 {
+    /// The shadow radius of the right thumb. The default value of this property is `3.0`
+    @IBInspectable open var rightThumbShadowRadius: CGFloat = 3.0 {
         didSet { rightThumbLayer.shadowRadius = rightThumbShadowRadius }
     }
-    /// The shadow offset of the right thumb
-    @IBInspectable public var rightThumbShadowOffset: CGSize = CGSize(width:0.0, height:2.0) {
+    /// The shadow offset of the right thumb. The default value of this property is `(0.0, -3.0)`
+    @IBInspectable open var rightThumbShadowOffset: CGSize = CGSize(width: 0.0, height: -3.0) {
         didSet { rightThumbLayer.shadowOffset = rightThumbShadowOffset }
     }
-    /// The size of the thumbs
+    /// The size of the thumbs. The default value of this property is `20.0`
     @IBInspectable open var thumbsSize: CGFloat = 20.0 {
         didSet {
             leftThumbLayer.frame.size = CGSize(width: thumbsSize, height: thumbsSize)
@@ -146,12 +160,13 @@ import UIKit
     /// The delegate of `YSRangeSlider`
     open weak var delegate: YSRangeSliderDelegate?
     
-    // MARK: - Private Properties
+    public let sliderLineLayer = CALayer()
+    public let leftThumbLayer = CALayer()
+    public let rightThumbLayer = CALayer()
+    public let thumbsDistanceLineLayer = CALayer()
     
-    private let sliderLineLayer = CALayer()
-    private let leftThumbLayer = CALayer()
-    private let rightThumbLayer = CALayer()
-    private let thumbsDistanceLineLayer = CALayer()
+    // MARK: - Private Properties
+
     private let thumbTouchAreaExpansion: CGFloat = -90.0
     private var leftThumbSelected = false
     private var rightThumbSelected = false
@@ -218,8 +233,8 @@ import UIKit
 
         if leftThumbLayer.frame.insetBy(dx: thumbTouchAreaExpansion, dy: thumbTouchAreaExpansion).contains(pressGestureLocation) ||
            rightThumbLayer.frame.insetBy(dx: thumbTouchAreaExpansion, dy: thumbTouchAreaExpansion).contains(pressGestureLocation) {
-            let distanceFromLeftThumb = distanceBetween(firstPoint: pressGestureLocation, secondPoint: leftThumbLayer.frame.center)
-            let distanceFromRightThumb = distanceBetween(firstPoint: pressGestureLocation, secondPoint: rightThumbLayer.frame.center)
+            let distanceFromLeftThumb = distanceBetween(pressGestureLocation, leftThumbLayer.frame.center)
+            let distanceFromRightThumb = distanceBetween(pressGestureLocation, rightThumbLayer.frame.center)
             
             if distanceFromLeftThumb < distanceFromRightThumb {
                 leftThumbSelected = true
@@ -294,7 +309,7 @@ import UIKit
         return sliderLineLayer.frame.minX + offset
     }
     
-    private func distanceBetween(firstPoint: CGPoint, secondPoint: CGPoint) -> CGFloat {
+    private func distanceBetween(_ firstPoint: CGPoint, _ secondPoint: CGPoint) -> CGFloat {
         let xDistance = secondPoint.x - firstPoint.x
         let yDistance = secondPoint.y - firstPoint.y
         
