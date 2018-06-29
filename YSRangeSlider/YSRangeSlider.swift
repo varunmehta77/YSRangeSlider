@@ -11,6 +11,9 @@ import UIKit
 @IBDesignable open class YSRangeSlider: UIControl {
     // MARK: - Public Properties
     
+    private let rightThumbLabel = UILabel()
+    private let leftThumbLabel = UILabel()
+    
     /// The minimum possible value to select in the range. The default value of this property is `0.0`
     @IBInspectable open var minimumValue: CGFloat = 0.0 {
         didSet { updateComponentsPosition() }
@@ -50,9 +53,9 @@ import UIKit
     }
     /** The step, or increment, value for the slider. The default value of this property is `0.0`
      
-    - Note: Default value is `0.0`, which means it is disabled
-    - Precondition: Must be numerically greater than `0` and less than or equal to `maximumValue`
-    */
+     - Note: Default value is `0.0`, which means it is disabled
+     - Precondition: Must be numerically greater than `0` and less than or equal to `maximumValue`
+     */
     @IBInspectable open var step: CGFloat = 0.0 {
         didSet {
             if step < 0 {
@@ -103,7 +106,9 @@ import UIKit
     }
     /// The color of the left thumb. The default value of this property is `black`
     @IBInspectable open var leftThumbColor: UIColor = UIColor.black {
-        didSet { leftThumbLayer.backgroundColor = leftThumbColor.cgColor }
+        didSet { leftThumbLayer.backgroundColor = leftThumbColor.cgColor
+            leftThumbLabel.textColor = leftThumbColor
+        }
     }
     /// The corner radius of the left thumb. The default value of this property is `10.0`
     @IBInspectable open var leftThumbCornerRadius: CGFloat = 10.0 {
@@ -127,7 +132,9 @@ import UIKit
     }
     /// The color of the right thumb. The default value of this property is `black`
     @IBInspectable open var rightThumbColor: UIColor = UIColor.black {
-        didSet { rightThumbLayer.backgroundColor = rightThumbColor.cgColor }
+        didSet { rightThumbLayer.backgroundColor = rightThumbColor.cgColor
+            rightThumbLabel.textColor = rightThumbColor
+        }
     }
     /// The corner radius of the right thumb. The default value of this property is `10.0`
     @IBInspectable open var rightThumbCornerRadius: CGFloat = 10.0 {
@@ -166,7 +173,7 @@ import UIKit
     public let thumbsDistanceLineLayer = CALayer()
     
     // MARK: - Private Properties
-
+    
     private let thumbTouchAreaExpansion: CGFloat = -90.0
     private var leftThumbSelected = false
     private var rightThumbSelected = false
@@ -202,6 +209,31 @@ import UIKit
         leftThumbLayer.shadowRadius = leftThumbShadowRadius
         layer.addSublayer(leftThumbLayer)
         
+        leftThumbLabel.frame.size = CGSize.init(width: thumbsSize * 2, height: thumbsSize)
+        rightThumbLabel.frame.size = CGSize.init(width: thumbsSize * 2, height: thumbsSize)
+        leftThumbLabel.textAlignment = .left
+        leftThumbLabel.textAlignment = .left
+        self.addSubview(rightThumbLabel)
+        self.addSubview(leftThumbLabel)
+        if #available(iOS 8.2, *) {
+            rightThumbLabel.font = UIFont.systemFont(
+                ofSize: 14,
+                weight: UIFontWeightBold
+            )
+        } else {
+            // Fallback on earlier versions
+        }
+        if #available(iOS 8.2, *) {
+            leftThumbLabel.font = UIFont.systemFont(
+                ofSize: 14,
+                weight: UIFontWeightBold
+            )
+        } else {
+            // Fallback on earlier versions
+        }
+        rightThumbLabel.adjustsFontSizeToFitWidth = true
+        leftThumbLabel.adjustsFontSizeToFitWidth = true
+        
         rightThumbLayer.backgroundColor = rightThumbColor.cgColor
         rightThumbLayer.cornerRadius = rightThumbCornerRadius
         rightThumbLayer.frame = CGRect(x: 0, y: 0, width: thumbsSize, height: thumbsSize)
@@ -230,9 +262,9 @@ import UIKit
     
     override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         let pressGestureLocation = touch.location(in: self)
-
+        
         if leftThumbLayer.frame.insetBy(dx: thumbTouchAreaExpansion, dy: thumbTouchAreaExpansion).contains(pressGestureLocation) ||
-           rightThumbLayer.frame.insetBy(dx: thumbTouchAreaExpansion, dy: thumbTouchAreaExpansion).contains(pressGestureLocation) {
+            rightThumbLayer.frame.insetBy(dx: thumbTouchAreaExpansion, dy: thumbTouchAreaExpansion).contains(pressGestureLocation) {
             let distanceFromLeftThumb = distanceBetween(pressGestureLocation, leftThumbLayer.frame.center)
             let distanceFromRightThumb = distanceBetween(pressGestureLocation, rightThumbLayer.frame.center)
             
@@ -291,9 +323,25 @@ import UIKit
     private func updateThumbsPosition() {
         let leftThumbCenter = CGPoint(x: getXPositionAlongSliderFor(value: minimumSelectedValue), y: sliderLineLayer.frame.midY)
         let rightThumbCenter = CGPoint(x: getXPositionAlongSliderFor(value: maximumSelectedValue), y: sliderLineLayer.frame.midY)
+        let leftLabelCenter = CGPoint.init(x: getXPositionAlongSliderFor(value: minimumSelectedValue) - thumbsSize / 2, y: sliderLineLayer.frame.midY - 30)
+        var rightLabelCenter = CGPoint.init(x: getXPositionAlongSliderFor(value: maximumSelectedValue) - thumbsSize / 2, y: sliderLineLayer.frame.midY - 30)
+        
+        leftThumbLabel.frame.origin = leftLabelCenter
+        rightThumbLabel.frame.origin = rightLabelCenter
+        
+        if (leftThumbLabel.frame.intersects(rightThumbLabel.frame)) {
+            rightLabelCenter = CGPoint.init(x: getXPositionAlongSliderFor(value: maximumSelectedValue) - thumbsSize / 2, y: sliderLineLayer.frame.midY + 5)
+            rightThumbLabel.frame.origin = rightLabelCenter
+        }
         
         leftThumbLayer.position = leftThumbCenter
         rightThumbLayer.position = rightThumbCenter
+        
+        
+        
+        leftThumbLabel.text = "\(Int(minimumSelectedValue))"
+        rightThumbLabel.text = "\(Int(maximumSelectedValue))"
+        
         thumbsDistanceLineLayer.frame = CGRect(x: leftThumbLayer.position.x, y: sliderLineLayer.frame.origin.y, width: rightThumbLayer.position.x - leftThumbLayer.position.x, height: sliderLineHeight)
     }
     
@@ -305,7 +353,7 @@ import UIKit
         let percentage = getPercentageAlongSliderFor(value: value)
         let differenceBetweenMaxMinCoordinatePositionX = sliderLineLayer.frame.maxX - sliderLineLayer.frame.minX
         let offset = percentage * differenceBetweenMaxMinCoordinatePositionX
-    
+        
         return sliderLineLayer.frame.minX + offset
     }
     
@@ -317,11 +365,11 @@ import UIKit
     }
     
     private func animate(thumbLayer: CALayer, isSelected selected: Bool) {
-        CATransaction.begin()
-        CATransaction.setAnimationDuration(0.5)
-        CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
-        thumbLayer.transform = selected ? CATransform3DMakeScale(1.3, 1.3, 1) : CATransform3DIdentity
-        CATransaction.commit()
+        //        CATransaction.begin()
+        //        CATransaction.setAnimationDuration(0.5)
+        //        CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
+        //        thumbLayer.transform = selected ? CATransform3DMakeScale(1.3, 1.3, 1) : CATransform3DIdentity
+        //        CATransaction.commit()
     }
 }
 
@@ -338,10 +386,10 @@ extension CGRect {
 public protocol YSRangeSliderDelegate: class {
     /** Delegate function that is called every time minimum or maximum selected value is changed
      
-    - Parameters:
-        - rangeSlider: Current instance of `YSRangeSlider`
-        - minimumSelectedValue: The minimum selected value
-        - maximumSelectedValue: The maximum selected value
-    */
+     - Parameters:
+     - rangeSlider: Current instance of `YSRangeSlider`
+     - minimumSelectedValue: The minimum selected value
+     - maximumSelectedValue: The maximum selected value
+     */
     func rangeSliderDidChange(_ rangeSlider: YSRangeSlider, minimumSelectedValue: CGFloat, maximumSelectedValue: CGFloat)
 }
