@@ -231,7 +231,7 @@ import UIKit
         if #available(iOS 8.2, *) {
             rightThumbLabel.font = UIFont.systemFont(
                 ofSize: 14,
-                weight: UIFontWeightBold
+                weight: UIFont.Weight.bold
             )
         } else {
             // Fallback on earlier versions
@@ -239,7 +239,7 @@ import UIKit
         if #available(iOS 8.2, *) {
             leftThumbLabel.font = UIFont.systemFont(
                 ofSize: 14,
-                weight: UIFontWeightBold
+                weight: UIFont.Weight.bold
             )
         } else {
             // Fallback on earlier versions
