@@ -110,6 +110,19 @@ import UIKit
             leftThumbLabel.textColor = leftThumbColor
         }
     }
+    
+    @IBInspectable open var leftTitleTextColor: UIColor = UIColor.black {
+       didSet {
+           leftThumbLabel.textColor = leftTitleTextColor
+       }
+   }
+   
+   @IBInspectable open var RightTitleTextColor: UIColor = UIColor.black {
+       didSet {
+           rightThumbLabel.textColor = RightTitleTextColor
+       }
+   }
+    
     /// The corner radius of the left thumb. The default value of this property is `10.0`
     @IBInspectable open var leftThumbCornerRadius: CGFloat = 10.0 {
         didSet { leftThumbLayer.cornerRadius = leftThumbCornerRadius }
